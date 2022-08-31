@@ -1,0 +1,49 @@
+c:\Users\abrah\Documents\flask\sepomex\env\scripts\activate.bat
+
+
+
+ docker run -d    -p 5432:5432 
+
+ docker run --name app-postgres --env POSTGRES_PASSWORD=e1bc9e7f864d -v c:/Users/abrah/Documents/respaldoPostgresqlSepomex:/var/lib/postgresql/data -e PGDATA=/var/lib/postgresql/data/pgdata -p 5432:5432 postgres
+
+ pip freeze > requirements.txt
+
+ from flask_jwt_extended import jwt_required, get_jwt_identity 
+
+ @jwt_required 
+
+ jwt_required
+ dockerizar subirlo a kubernetes
+ hacer pull al repositorio
+ instruncciones de despliegue
+
+ set  SQLALCHEMY_DATABASE_URI=postgresql://postgres:123456@localhost:5432/sepomex
+ set JWT_SECRET_KEY=super-secret
+
+ nombre_de_usuario/nombre_del_repositorio:etiqueta
+ 
+
+ docker build -t abraham1255/sepomex:1.0 .
+docker push abraham1255/sepomex:1.0
+
+docker cp 8ba7b6e46978:/back.sql c:/Users/abrah/Documentos
+
+kubectl cp c:/Users/abrah/Documentos basesepomex-f7f974bb9-r5mwx:/tmp/bar 
+kubectl create serviceaccount dashboard-admin-sa
+
+kubectl create serviceaccount dashboard-admin-sa
+
+kubectl create clusterrolebinding dashboard-admin-sa --clusterrole=cluster-admin --serviceaccount=default:dashboard-admin-sa
+
+
+kubectl describe secret dashboard-admin-sa-token-pbgb7
+
+TOKEN K8S
+eyJhbGciOiJSUzI1NiIsImtpZCI6InFvYmlmNVhsMDNLdkZod0VXa1VUdnJUX0plM3RGcEFIN3JRbFZmME41OGcifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJkZWZhdWx0Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6ImRhc2hib2FyZC1hZG1pbi1zYS10b2tlbi1wYmdiNyIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJkYXNoYm9hcmQtYWRtaW4tc2EiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiJlZTM1NDVmZi0wN2MwLTQ2ZTktOTZlYy04OTk2NGNkMDM3NmEiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6ZGVmYXVsdDpkYXNoYm9hcmQtYWRtaW4tc2EifQ.oI0HTlXMFtSs04_mDZdDeRXPiNJQwDsdk8RUKZNMkcs2Kw9KtqHcVXvV0ii3MWMShtyLsguxDRnlhy9wrQzoYF850sHZdv6vOHEodmqsAaCcPTFUG1qvb9l0ksQi6hXLvMIKSeE_cjDNpSbQCTxiVzE20nD7FJDpLNAR-QkTstcUoefYZFBDP4QjPYr30eb4m7CCva2_NHOGdVyJ9GcCtNK2quMmDR11nB1q5cpeUuN8c-nH3fPx7s3hf3JDnI374iQhOWbfEn81gK6q-8qlXRPaG04ObAjgnCTD6N83b-crUTRRUl9U5ohwexPmhaNml-CJ9d3UfG_t54iY9Q18mw
+
+
+
+falta subir codigo al repositorio Listo
+falta base de datos -> llenar Ciudad de mexico y algun otro 
+falta excepciones
+falta paginar puede ser ?

@@ -1,85 +1,30 @@
-# API PYTHON-FLASK SEPOMEX
-## Servicio que devuelve colonias, estados y municipios del catalogo de SEPOMEX
+Servicio que devuelve datos en formato JSON del los catalogos de SEPOMEX
 
-## INSTALACIÓN
 
-### Base de Datos:
+Pasos para levantar la base de datos:
 En el repositorio se encuentra un backup de la base de datos (sepomex.sql), se requiere restaurar dicha base de datos con el nombre de sepomex
 
 Se puede montar la base de datos instalando postgresql en la maquina local o generar un contenedor con la base de datos importante montar volumenes para evitar perdida de datos.
+----------------------------------------------------------------------------------------------------------------------------------------
+Pasos para correr la api en entorno local (Desarrollo)
 
-## Despliegue de la API
+Tener instalado Python version 3.10
+Hacer pull del repositorio: 
+Generar entorno virtual pip -m venv env
+Activar Entorno virtual 
+    Windows: rutadelproyecto\env\scripts\activate.bat
 
-Se requiere Python 3.10
+Instalar librerias pip install -r requirements.txt
+Revisar el archivo config.py en el se encuentran variables de entorno que se deben considerar y se deben crear en la maquina huesped o pasarlas como parametro al contenedor segun sea el caso.
 
-Clonar el repositorio https://github.com/abraham1255/sepomex y crear entorno virtual
-
-```
-pip -m venv env
-```
-
-Activar entorno virtual Windows:
-
-```sh
-rutadelproyecto\env\scripts\activate.bat
-```
-
-Activar entorno virtual linux:
-
-```sh
-source env\scripts\activate
-```
-Instalar librerias 
-```sh
-pip install -r requirements.txt
-```
-
-Generar variables de ambiente para la conexion a base de datos y secret de Jwt
-```sh
- set SQLALCHEMY_DATABASE_URI=postgresql://postgres:123456@localhost:5432/sepomex
- set JWT_SECRET_KEY=super-secret //change
-```
-
-Levantar aplicación 
-```sh
- python main.py
-```
-## Endpoints
-
-El proyecto contiene seguridad por medio de Jwt por lo que para poder acceder a los endpoints se debe pedir un token con los siguientes parametros:
-
-| url | metodo |  parametros | 
-| ------ | ------ |  ------ |
-| http://localhost/api/v1/login | POST | {"username": "test","password":"test"}|
-
-Para consultar los siguientes endpoints se debera colocar el token generado en los headers de la peticion ejemplo :
-
-curl --location --request GET 'http://localhost/api/v1/colonias/1/5/10' \
---header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY0ODc2MjYwOCwianRpIjoiMmIzOWY4YzEtNDA3Ni00NDIzLWFiMWMtYzYxMWVjZDFmY2RmIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InRlc3QiLCJuYmYiOjE2NDg3NjI2MDgsImV4cCI6MTY0ODc2MzUwOH0.j-YkkgKm4AtKr02SnpiqT6d5nh2wtT4vAFLEWa97DjY'
+Para lanzar la aplicacion se debe utilizar el siguiente comando:
+    python main.py
 
 
-| url | metodo |  parametros | 
-| ------ | ------ |  ------ |
-| http://localhost/api/v1/colonias/10000/1/10 | GET | El primer parametro corresponde a la busqueda es decir se esta buscando la colonia con el cp 10000, el segundo parametro indica que pagina se quiere obtener y el tercero cuantos registros deseas mostrar|
-| http://localhost/api/v1/coloniasByName/pedregal/1/10| GET | El primer parametro corresponde a la busqueda es decir se esta buscando la colonia con el nombre pedregal, el segundo parametro indica que pagina se quiere obtener y el tercero cuantos registros deseas mostrar|
-| http://localhost/api/v1/estadosByName/Aguascalientes/1/10| GET | El primer parametro corresponde a la busqueda es decir se esta buscando el estado con el nombre Aguascalientes, el segundo parametro indica que pagina se quiere obtener y el tercero cuantos registros deseas mostrar|
-| http://localhost/api/v1/municipiosByName/Xochimilco/1/2| GET | El primer parametro corresponde a la busqueda es decir se esta buscando el municipio con el nombre Xochimilco, el segundo parametro indica que pagina se quiere obtener y el tercero cuantos registros deseas mostrar|
+Adicional se puede levantar el proyecto teniendo docker instalado de la siguiente manera:
+    En la carpeta del proyecto ejecutar docker build -t abraham1255/sepomex:1.0 . 
+    para generar la imagen 
+    Para correr la imagen se puede utilizar el siguiente comando una vez construida la imagen
+    docker run -p 8000:8000 abraham1255/sepomex:1.0 --env SQLALCHEMY_DATABASE_URI=cadenadeconexionbd --env JWT_SECRET_KEY=secret-jwt
 
-## CONSTRUIR IMAGEN EN DOCKER
-
-Se debe contar con docker instalado en la maquina local
-
-Colocarse en la raiz del proyecto a la altura del archivo Dockerfile
-
-Para generar la imagen se utiliza el siguiente comando:
-
-```sh
-docker build -t abraham1255/sepomex:1.0 .
-```
-
-Para correr el contenedor apartir de la imagen se utiliza el siguiente comando:
-
-```sh
-docker run -p 8000:8000 --env SQLALCHEMY_DATABASE_URI=cadenadeconexionbd --env JWT_SECRET_KEY=secret-jwt abraham1255/sepomex:1.0 
-```
-Teniendo la imagen de la API construida se puede subir a DockerHub o cualquier repositorio y posteriormente montarlas en alguna plataforma que pueda orquestar contenedores.
+Una vez teniendo la imagen de la API se puede subir a DockerHub o cualquier repositorio y posteriormente montarlas en alguna plataforma que pueda orquestar contenedores.
